@@ -18,11 +18,3 @@ public class testMain {
     }
     
 }
-
-//        this.id = id;
-//        this.nome = nome;
-//        this.cpf = cpf;
-//        this.email = email;
-//        this.senha = senha;
-//        this.telefone = telefone;
-//        this.endereco = endereco;
