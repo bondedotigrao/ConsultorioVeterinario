@@ -14,7 +14,7 @@ import org.hibernate.cfg.Configuration;
  */
 public class ClienteHibernate implements ClienteDAO{
     
-    private SessionFactory sessions;
+    private SessionFactory sessions = null;
     private static ClienteHibernate instance = null;
     private EntityManagerFactory emf = null;
 
