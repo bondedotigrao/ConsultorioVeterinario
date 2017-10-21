@@ -14,7 +14,6 @@ import javax.persistence.Id;
 @Entity
 public class Animal implements Serializable{
     @Id
-    @GeneratedValue
     private int id;
     @Column(nullable = false)
     private int id_dono;

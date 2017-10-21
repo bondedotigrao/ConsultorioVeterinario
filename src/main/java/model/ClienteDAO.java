@@ -1,6 +1,4 @@
-package repositorios;
-
-import model.Cliente;
+package model;
 
 /**
  *

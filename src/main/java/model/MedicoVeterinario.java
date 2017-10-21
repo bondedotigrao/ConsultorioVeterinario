@@ -6,15 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Sebastian
  */
 @Entity
+@Table(name="medico_vet")
 public class MedicoVeterinario implements Serializable{
     @Id
-    @GeneratedValue
     private int id;
     @Column(length = 100, nullable = false)
     private String nome;

@@ -1,4 +1,4 @@
-package repositorios;
+package model;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
-package repositorios;
+package controller;
 
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
-import model.Cliente;
+import model.Animal;
+import model.AnimalDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,33 +13,34 @@ import org.hibernate.cfg.Configuration;
  *
  * @author Sebastian
  */
-public class ClienteHibernate implements ClienteDAO{
+public class AnimalHibernateDAO implements AnimalDAO{
     
     private SessionFactory sessions = null;
-    private static ClienteHibernate instance = null;
+    private static AnimalHibernateDAO instance = null;
     private EntityManagerFactory emf = null;
 
-    public static ClienteHibernate getInstance() {
+    public static AnimalHibernateDAO getInstance() {
 
         if (instance == null) {
-            instance = new ClienteHibernate();
+            instance = new AnimalHibernateDAO();
         }
 
         return instance;
     }
 
-    public ClienteHibernate() {
+    public AnimalHibernateDAO() {
 
         Configuration cfg = new Configuration().configure();
         this.sessions = cfg.buildSessionFactory();
     }
 
-    public void adicionar(Cliente cliente) {
+    @Override
+    public void adicionar(Animal animal) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
         try {
-            session.persist(cliente);
+            session.persist(animal);
             t.commit();
         } catch (Exception e) {
             t.rollback();
@@ -49,10 +51,10 @@ public class ClienteHibernate implements ClienteDAO{
     }
 
     @Override
-    public Cliente recuperar(int codigo) {
+    public Animal recuperar(int codigo) {
         Session session = this.sessions.openSession();
         try {
-            return (Cliente) session.getSession().createQuery("From Cliente Where id=" + codigo).getResultList().get(0);
+            return (Animal) session.getSession().createQuery("From Animal Where id=" + codigo).getResultList().get(0);
 
         } finally {
             //Fechamos a sessão
@@ -62,16 +64,16 @@ public class ClienteHibernate implements ClienteDAO{
     }
 
     @Override
-    public void alterar(Cliente t) {
+    public void alterar(Animal t) {
     }
 
     @Override
-    public void deletar(Cliente cliente) {
+    public void deletar(Animal animal) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
         try {
-            session.delete(cliente);
+            session.delete(animal);
             t.commit();
         } catch (Exception e) {
             t.rollback();
