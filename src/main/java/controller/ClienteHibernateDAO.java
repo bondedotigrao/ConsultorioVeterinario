@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import model.Cliente;
@@ -13,8 +14,8 @@ import model.ClienteDAO;
  *
  * @author Sebastian
  */
-public class ClienteHibernateDAO implements ClienteDAO{
-    
+public class ClienteHibernateDAO implements ClienteDAO {
+
     private SessionFactory sessions = null;
     private static ClienteHibernateDAO instance = null;
     private EntityManagerFactory emf = null;
@@ -84,19 +85,20 @@ public class ClienteHibernateDAO implements ClienteDAO{
     }
 
     @Override
-    public List recuperarTodos() {
-        
+    public List<Cliente> recuperarTodos() {
         Session session = this.sessions.openSession();
-
+        List<Cliente> listaCliente = new ArrayList();
         try {
 
-            return (List) session.getSession().createQuery("");
-
+            listaCliente = session.createQuery("FROM Cliente").list();
+        } catch (Exception e) {
+            System.out.println("Erro!");
         } finally {
-
             session.close();
         }
 
+        return listaCliente;
+
     }
-    
+
 }
