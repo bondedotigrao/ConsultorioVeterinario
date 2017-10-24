@@ -1,8 +1,8 @@
 package model;
 
-import controller.AnimalHibernateDAO;
-import controller.ClienteHibernateDAO;
-import controller.MedicoVeterinarioHibernateDAO;
+import model.implementations.AnimalHibernateDAO;
+import model.implementations.ClienteHibernateDAO;
+import model.implementations.MedicoVeterinarioHibernateDAO;
 
 /**
  *

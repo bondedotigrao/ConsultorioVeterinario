@@ -1,46 +1,47 @@
-package controller;
+package model.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
-import model.Animal;
-import model.AnimalDAO;
+import model.Cliente;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import model.interfaces.ClienteDAO;
 
 /**
  *
  * @author Sebastian
  */
-public class AnimalHibernateDAO implements AnimalDAO{
-    
+public class ClienteHibernateDAO implements ClienteDAO {
+
     private SessionFactory sessions = null;
-    private static AnimalHibernateDAO instance = null;
+    private static ClienteHibernateDAO instance = null;
     private EntityManagerFactory emf = null;
 
-    public static AnimalHibernateDAO getInstance() {
+    public static ClienteHibernateDAO getInstance() {
 
         if (instance == null) {
-            instance = new AnimalHibernateDAO();
+            instance = new ClienteHibernateDAO();
         }
 
         return instance;
     }
 
-    public AnimalHibernateDAO() {
+    public ClienteHibernateDAO() {
 
         Configuration cfg = new Configuration().configure();
         this.sessions = cfg.buildSessionFactory();
     }
 
     @Override
-    public void adicionar(Animal animal) {
+    public void adicionar(Cliente cliente) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
         try {
-            session.persist(animal);
+            session.persist(cliente);
             t.commit();
         } catch (Exception e) {
             t.rollback();
@@ -51,10 +52,10 @@ public class AnimalHibernateDAO implements AnimalDAO{
     }
 
     @Override
-    public Animal recuperar(int codigo) {
+    public Cliente recuperar(int codigo) {
         Session session = this.sessions.openSession();
         try {
-            return (Animal) session.getSession().createQuery("From Animal Where id=" + codigo).getResultList().get(0);
+            return (Cliente) session.getSession().createQuery("From Cliente Where id=" + codigo).getResultList().get(0);
 
         } finally {
             //Fechamos a sessão
@@ -64,16 +65,16 @@ public class AnimalHibernateDAO implements AnimalDAO{
     }
 
     @Override
-    public void alterar(Animal t) {
+    public void alterar(Cliente t) {
     }
 
     @Override
-    public void deletar(Animal animal) {
+    public void deletar(Cliente cliente) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
         try {
-            session.delete(animal);
+            session.delete(cliente);
             t.commit();
         } catch (Exception e) {
             t.rollback();
@@ -84,19 +85,20 @@ public class AnimalHibernateDAO implements AnimalDAO{
     }
 
     @Override
-    public List recuperarTodos() {
-        
+    public List<Cliente> recuperarTodos() {
         Session session = this.sessions.openSession();
-
+        List<Cliente> listaCliente = new ArrayList();
         try {
 
-            return (List) session.getSession().createQuery("");
-
+            listaCliente = session.createQuery("FROM Cliente").list();
+        } catch (Exception e) {
+            System.out.println("Erro!");
         } finally {
-
             session.close();
         }
 
+        return listaCliente;
+
     }
-    
+
 }

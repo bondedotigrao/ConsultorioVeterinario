@@ -1,9 +1,9 @@
-package controller;
+package model.implementations;
 
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import model.MedicoVeterinario;
-import model.MedicoVeterinarioDAO;
+import model.interfaces.MedicoVeterinarioDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

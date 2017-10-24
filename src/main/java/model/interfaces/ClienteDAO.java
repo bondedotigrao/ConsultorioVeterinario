@@ -1,4 +1,7 @@
-package model;
+package model.interfaces;
+
+import model.Cliente;
+import model.interfaces.DAO;
 
 /**
  *
