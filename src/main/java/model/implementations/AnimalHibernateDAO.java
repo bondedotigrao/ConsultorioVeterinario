@@ -13,8 +13,8 @@ import org.hibernate.cfg.Configuration;
  *
  * @author Sebastian
  */
-public class AnimalHibernateDAO implements AnimalDAO{
-    
+public class AnimalHibernateDAO implements AnimalDAO {
+
     private SessionFactory sessions = null;
     private static AnimalHibernateDAO instance = null;
     private EntityManagerFactory emf = null;
@@ -64,7 +64,22 @@ public class AnimalHibernateDAO implements AnimalDAO{
     }
 
     @Override
-    public void alterar(Animal t) {
+    public void alterar(Animal animal) {
+
+        Session session = this.sessions.openSession();
+        Transaction t = session.beginTransaction();
+
+        try {
+
+            session.update(animal);
+            t.commit();
+
+        } catch (Exception alteraAnimalException) {
+            System.out.println(alteraAnimalException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o animal");
+            t.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
@@ -85,7 +100,7 @@ public class AnimalHibernateDAO implements AnimalDAO{
 
     @Override
     public List recuperarTodos() {
-        
+
         Session session = this.sessions.openSession();
 
         try {
@@ -98,5 +113,5 @@ public class AnimalHibernateDAO implements AnimalDAO{
         }
 
     }
-    
+
 }

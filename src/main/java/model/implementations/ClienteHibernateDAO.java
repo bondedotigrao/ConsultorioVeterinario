@@ -65,7 +65,22 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public void alterar(Cliente t) {
+    public void alterar(Cliente cliente) {
+
+        Session session = this.sessions.openSession();
+        Transaction t = session.beginTransaction();
+
+        try {
+
+            session.update(cliente);
+            t.commit();
+
+        } catch (Exception alteraClienteException) {
+            System.out.println(alteraClienteException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o cliente");
+            t.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
