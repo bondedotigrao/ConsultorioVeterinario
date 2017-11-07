@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -18,6 +19,7 @@ import javax.persistence.InheritanceType;
 public abstract class Pessoa implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "primeiro_nome", length = 50, nullable = false)
     private String nomeP;
@@ -28,8 +30,7 @@ public abstract class Pessoa implements Serializable {
     @Column(length = 60, nullable = false)
     private String email;
 
-    public Pessoa(int id, String nomeP, String nomeS, String cpf, String email) {
-        this.id = id;
+    public Pessoa(String nomeP, String nomeS, String cpf, String email) {
         this.nomeP = nomeP;
         this.nomeS = nomeS;
         this.cpf = cpf;

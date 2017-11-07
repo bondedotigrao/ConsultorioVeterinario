@@ -1,8 +1,12 @@
 package view;
 
 import controller.ClienteController;
+import controller.EnderecoController;
+import controller.MedicoVeterinarioController;
 import java.util.Random;
 import model.Cliente;
+import model.Endereco;
+import model.MedicoVeterinario;
 
 /**
  *
@@ -12,11 +16,11 @@ public class testMain {
 
     public static void main(String[] args) {
 
-        Random r = new Random();
-        
-        Cliente c = new Cliente((100 + r.nextInt(800)), "José", "Augusto", "87676456787", "cais@gmail.com", "87555544443");
-        
+        Cliente c = new Cliente("teste", "teste", "teste", "teste", "teste");
+
         ClienteController.getInstance().adicionar(c);
+
+//        MedicoVeterinarioController.getInstance().adicionar(m);
 
     }
 

@@ -2,19 +2,25 @@ package model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sion_
  */
-@Entity
-public class Endereco implements Serializable{
-    
+
+public class Endereco implements Serializable {
+
     @Id
-    private int id_cliente;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id_endereco;
     private String rua;
     private int numero;
     private String bairro;
@@ -22,9 +28,11 @@ public class Endereco implements Serializable{
     private String estado;
     @Column(length = 8)
     private String cep;
+    
+    @OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private Cliente cliente;
 
-    public Endereco(int id_cliente, String rua, int numero, String bairro, String cidade, String estado, String cep) {
-        this.id_cliente = id_cliente;
+    public Endereco(String rua, int numero, String bairro, String cidade, String estado, String cep) {
         this.rua = rua;
         this.numero = numero;
         this.bairro = bairro;
@@ -36,12 +44,14 @@ public class Endereco implements Serializable{
     public Endereco() {
     }
     
-    public int getId_cliente() {
-        return id_cliente;
-    }
     
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+
+    public int getId() {
+        return id_endereco;
+    }
+
+    public void setId(int id) {
+        this.id_endereco = id;
     }
 
     public String getRua() {
@@ -91,16 +101,18 @@ public class Endereco implements Serializable{
     public void setCep(String cep) {
         this.cep = cep;
     }
+    
+    
 
     @Override
     public String toString() {
-        return "Endereco{" + "id_cliente=" + id_cliente + ", rua=" + rua + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep + '}';
+        return "Endereco{" + "id=" + id_endereco + ", rua=" + rua + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id_cliente;
+        int hash = 3;
+        hash = 43 * hash + this.id_endereco;
         return hash;
     }
 
@@ -116,7 +128,7 @@ public class Endereco implements Serializable{
             return false;
         }
         final Endereco other = (Endereco) obj;
-        if (this.id_cliente != other.id_cliente) {
+        if (this.id_endereco != other.id_endereco) {
             return false;
         }
         if (this.numero != other.numero) {
@@ -139,7 +151,8 @@ public class Endereco implements Serializable{
         }
         return true;
     }
-    
+
+        
     
     
 }
