@@ -1,9 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model.implementations;
 
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
-import model.Animal;
-import model.interfaces.AnimalDAO;
+import model.Exame;
+import model.interfaces.ExameDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,71 +16,62 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Sebastian
+ * @author sion_
  */
-public class AnimalHibernateDAO implements AnimalDAO {
-
+public class ExameHibernateDAO implements ExameDAO{
+    
     private SessionFactory sessions = null;
-    private static AnimalHibernateDAO instance = null;
+    private static ExameHibernateDAO instance = null;
     private EntityManagerFactory emf = null;
-
-    public static AnimalHibernateDAO getInstance() {
-
+    
+    public static ExameHibernateDAO getInstance() {
+        
         if (instance == null) {
-            instance = new AnimalHibernateDAO();
+            instance = new ExameHibernateDAO();
         }
-
         return instance;
     }
-
-    public AnimalHibernateDAO() {
-
+    
+    public ExameHibernateDAO() {
         Configuration cfg = new Configuration().configure();
         this.sessions = cfg.buildSessionFactory();
     }
 
     @Override
-    public void adicionar(Animal animal) {
+    public void adicionar(Exame exame) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
-
+        
         try {
-            session.persist(animal);
+            session.persist(exame);
             t.commit();
         } catch (Exception e) {
             t.rollback();
-
         } finally {
             session.close();
         }
     }
 
     @Override
-    public Animal recuperar(int codigo) {
+    public Exame recuperar(int id) {
         Session session = this.sessions.openSession();
         try {
-            return (Animal) session.getSession().createQuery("From Animal Where id_animal=" + codigo).getResultList().get(0);
-
+            return (Exame) session.getSession().createQuery("FROM Exame WHERE id_exame" + id).getResultList().get(0);
         } finally {
-            //Fechamos a sessão
             session.close();
         }
-
     }
 
     @Override
-    public void alterar(Animal animal) {
-
+    public void alterar(Exame exame) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
-
+        
         try {
-
-            session.update(animal);
+            session.update(exame);
             t.commit();
-
-        } catch (Exception alteraAnimalException) {
-            System.out.println(alteraAnimalException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o animal!");
+        } catch (Exception alteraExameException) {
+            System.out.println(alteraExameException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o exame!");
             t.rollback();
         } finally {
             session.close();
@@ -83,35 +79,31 @@ public class AnimalHibernateDAO implements AnimalDAO {
     }
 
     @Override
-    public void deletar(Animal animal) {
+    public void deletar(Exame exame) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
-
+        
         try {
-            session.delete(animal);
+            session.delete(exame);
             t.commit();
         } catch (Exception e) {
             t.rollback();
-
         } finally {
             session.close();
         }
     }
 
     @Override
-    public List recuperarTodos() {
-
+    public List<Exame> recuperarTodos() {
         Session session = this.sessions.openSession();
-
+        
         try {
-
             return (List) session.getSession().createQuery("");
-
         } finally {
-
             session.close();
         }
-
     }
-
+    
+    
+    
 }

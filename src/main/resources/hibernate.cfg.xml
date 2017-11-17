@@ -49,5 +49,6 @@ Contributor(s):
     <mapping class="model.Animal"/>
     <mapping class="model.Cliente"/>
     <mapping class="model.MedicoVeterinario"/>
+    <mapping class="model.Consulta"/>
   </session-factory>
 </hibernate-configuration>

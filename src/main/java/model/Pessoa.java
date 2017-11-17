@@ -44,10 +44,6 @@ public abstract class Pessoa implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNomeP() {
         return nomeP;
     }

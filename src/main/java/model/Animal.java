@@ -5,18 +5,24 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Sebastian
  */
 @Entity
-public class Animal implements Serializable{
+public class Animal implements Serializable {
+
     @Id
-    private int id;
-    @Column(nullable = false)
-    private int id_dono;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id_animal;
+    @JoinColumn(nullable = false, name = "id_dono", referencedColumnName = "id")
+    @OneToOne
+    private Cliente dono;
     @Column(length = 20, nullable = false)
     private String animal;
     @Column(length = 20)
@@ -24,9 +30,8 @@ public class Animal implements Serializable{
     @Column(length = 30, nullable = false)
     private String nome;
 
-    public Animal(int id, int id_dono, String animal, String raca, String nome) {
-        this.id = id;
-        this.id_dono = id_dono;
+    public Animal(Cliente dono, String animal, String raca, String nome) {
+        this.dono = dono;
         this.animal = animal;
         this.raca = raca;
         this.nome = nome;
@@ -36,19 +41,15 @@ public class Animal implements Serializable{
     }
 
     public int getId() {
-        return id;
+        return id_animal;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Cliente getDono() {
+        return dono;
     }
 
-    public int getId_dono() {
-        return id_dono;
-    }
-
-    public void setId_dono(int id_dono) {
-        this.id_dono = id_dono;
+    public void setDono(Cliente dono) {
+        this.dono = dono;
     }
 
     public String getAnimal() {
@@ -75,47 +76,4 @@ public class Animal implements Serializable{
         this.nome = nome;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 11 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Animal other = (Animal) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (this.id_dono != other.id_dono) {
-            return false;
-        }
-        if (!Objects.equals(this.animal, other.animal)) {
-            return false;
-        }
-        if (!Objects.equals(this.raca, other.raca)) {
-            return false;
-        }
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Animal{" + "id=" + id + ", id_dono=" + id_dono + ", animal=" + animal + ", raca=" + raca + ", nome=" + nome + '}';
-    }
-    
-    
 }
