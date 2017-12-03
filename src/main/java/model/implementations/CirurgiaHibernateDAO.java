@@ -38,7 +38,7 @@ public class CirurgiaHibernateDAO implements CirurgiaDAO{
     }
 
     @Override
-    public void adicionar(Cirurgia cirurgia) {
+    public void create(Cirurgia cirurgia) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
         
@@ -53,7 +53,7 @@ public class CirurgiaHibernateDAO implements CirurgiaDAO{
     }
 
     @Override
-    public Cirurgia recuperar(int id) {
+    public Cirurgia read(int id) {
         Session session = this.sessions.openSession();
         try {
             return (Cirurgia) session.getSession().createQuery("FROM Cirurgia WHERE id_cirurgia" + id).getResultList().get(0);
@@ -63,7 +63,7 @@ public class CirurgiaHibernateDAO implements CirurgiaDAO{
     }
 
     @Override
-    public void alterar(Cirurgia cirurgia) {
+    public void update(Cirurgia cirurgia) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
         
@@ -79,7 +79,7 @@ public class CirurgiaHibernateDAO implements CirurgiaDAO{
     }
 
     @Override
-    public void deletar(Cirurgia Cirurgia) {
+    public void delete(Cirurgia Cirurgia) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
         
@@ -94,7 +94,7 @@ public class CirurgiaHibernateDAO implements CirurgiaDAO{
     }
 
     @Override
-    public List<Cirurgia> recuperarTodos() {
+    public List<Cirurgia> readAll() {
         Session session = this.sessions.openSession();
         
         try {

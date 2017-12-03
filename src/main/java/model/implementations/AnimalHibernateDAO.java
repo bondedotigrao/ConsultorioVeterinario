@@ -35,7 +35,7 @@ public class AnimalHibernateDAO implements AnimalDAO {
     }
 
     @Override
-    public void adicionar(Animal animal) {
+    public void create (Animal animal) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -51,10 +51,10 @@ public class AnimalHibernateDAO implements AnimalDAO {
     }
 
     @Override
-    public Animal recuperar(int codigo) {
+    public Animal read(int codigo) {
         Session session = this.sessions.openSession();
         try {
-            return (Animal) session.getSession().createQuery("From Animal Where id_animal=" + codigo).getResultList().get(0);
+            return (Animal) session.getSession().createQuery("FROM Animal WHERE id_animal=" + codigo).getResultList().get(0);
 
         } finally {
             //Fechamos a sessão
@@ -64,7 +64,7 @@ public class AnimalHibernateDAO implements AnimalDAO {
     }
 
     @Override
-    public void alterar(Animal animal) {
+    public void update(Animal animal) {
 
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
@@ -83,7 +83,7 @@ public class AnimalHibernateDAO implements AnimalDAO {
     }
 
     @Override
-    public void deletar(Animal animal) {
+    public void delete(Animal animal) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -99,7 +99,7 @@ public class AnimalHibernateDAO implements AnimalDAO {
     }
 
     @Override
-    public List recuperarTodos() {
+    public List readAll() {
 
         Session session = this.sessions.openSession();
 

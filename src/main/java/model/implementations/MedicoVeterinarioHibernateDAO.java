@@ -35,7 +35,7 @@ public class MedicoVeterinarioHibernateDAO implements MedicoVeterinarioDAO{
     }
 
     @Override
-    public void adicionar(MedicoVeterinario mv) {
+    public void create(MedicoVeterinario mv) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -51,7 +51,7 @@ public class MedicoVeterinarioHibernateDAO implements MedicoVeterinarioDAO{
     }
 
     @Override
-    public MedicoVeterinario recuperar(int codigo) {
+    public MedicoVeterinario read(int codigo) {
         Session session = this.sessions.openSession();
         try {
             return (MedicoVeterinario) session.getSession().createQuery("From MedicoVeterinario Where id=" + codigo).getResultList().get(0);
@@ -64,11 +64,23 @@ public class MedicoVeterinarioHibernateDAO implements MedicoVeterinarioDAO{
     }
 
     @Override
-    public void alterar(MedicoVeterinario t) {
+    public void update(MedicoVeterinario mv) {
+        Session session = this.sessions.openSession();
+        Transaction t = session.beginTransaction();
+        
+        try {
+            session.update(mv);
+            t.commit();
+        } catch (Exception alteraExameException) {
+            System.out.println(alteraExameException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o médico veteriario!");
+            t.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public void deletar(MedicoVeterinario mv) {
+    public void delete(MedicoVeterinario mv) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -84,7 +96,7 @@ public class MedicoVeterinarioHibernateDAO implements MedicoVeterinarioDAO{
     }
 
     @Override
-    public List recuperarTodos() {
+    public List readAll() {
         
         Session session = this.sessions.openSession();
 

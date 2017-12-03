@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
-import javax.ejb.Timeout;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,25 +18,22 @@ import javax.persistence.TemporalType;
 public class Exame implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_exame;
     @Column(nullable = false)
     private String tipo_exame;
-    @Temporal(TemporalType.DATE)
-    private Date data_exame;
-    @Temporal(TemporalType.TIME)
-    private Time horario_exame;
+    @Column
+    private Date datahora_exame;
     @OneToOne
     @JoinColumn(nullable = false, name="cod_animal", referencedColumnName = "id_animal")
     private Animal animal;
     @OneToOne
-    @JoinColumn(nullable = false, name="cod_medico", referencedColumnName = "id")
+    @JoinColumn(nullable = false, name="cod_medico", referencedColumnName = "id_medico")
     private MedicoVeterinario medico;
     
-    public Exame(String tipo_exame, Date data_exame, Time horario_exame, Animal animal, MedicoVeterinario medico) {
+    public Exame(String tipo_exame, Date datahora_exame, Animal animal, MedicoVeterinario medico) {
         this.tipo_exame = tipo_exame;
-        this.data_exame = data_exame;
-        this.horario_exame = horario_exame;
+        this.datahora_exame = datahora_exame;
         this.animal = animal;
         this.medico = medico;
     }
@@ -66,20 +54,12 @@ public class Exame implements Serializable{
         this.tipo_exame = tipo_exame;
     }
 
-    public Date getData_exame() {
-        return data_exame;
+    public Date getDatahora_exame() {
+        return datahora_exame;
     }
 
-    public void setData_exame(Date data_exame) {
-        this.data_exame = data_exame;
-    }
-
-    public Time getHorario_exame() {
-        return horario_exame;
-    }
-
-    public void setHorario_exame(Time horario_exame) {
-        this.horario_exame = horario_exame;
+    public void setDatahora_exame(Date datahora_exame) {
+        this.datahora_exame = datahora_exame;
     }
 
     public Animal getAnimal() {
@@ -97,8 +77,9 @@ public class Exame implements Serializable{
     public void setMedico(MedicoVeterinario medico) {
         this.medico = medico;
     }
+
     
-    
+
     
     
 }

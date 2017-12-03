@@ -24,24 +24,24 @@ public class CirurgiaController {
         return instance;
     }
     
-    public static void adicionar(Cirurgia cirurgia) {
-        instance.adicionar(cirurgia);
+    public static void create(Cirurgia cirurgia) {
+        instance.create(cirurgia);
     }
     
-    public static void deletar(Cirurgia cirurgia) {
-        instance.deletar(cirurgia);
+    public static void delete(Cirurgia cirurgia) {
+        instance.delete(cirurgia);
     }
     
-    public static Cirurgia recuperar(int id) {
-        return instance.recuperar(id);
+    public static Cirurgia readCirurgia(int id) {
+        return instance.read(id);
     }
     
-    public static void alterar(Cirurgia cirurgia) {
-        instance.alterar(cirurgia);
+    public static void update(Cirurgia cirurgia) {
+        instance.update(cirurgia);
     }
     
-    public static List<Cirurgia> recuperarTodos() {
-        return instance.recuperarTodos();
+    public static List<Cirurgia> readAllCirurgias() {
+        return instance.readAll();
     }
     
 }

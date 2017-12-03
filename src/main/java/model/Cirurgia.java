@@ -1,48 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 /**
  *
  * @author sion_
  */
+@Entity
 public class Cirurgia implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_cirurgia;
     @Column(nullable = false)
     private String tipo_cirurgia;
-    @Temporal(TemporalType.DATE)
-    private Date data_cirurgia;
-    @Temporal(TemporalType.TIME)
-    private Time horario_cirurgia;
+    @Column
+    private Date datahora_cirurgia;
     @OneToOne
     @JoinColumn(nullable = false, name="cod_animal", referencedColumnName = "id_animal")
     private Animal animal;
     @OneToOne
-    @JoinColumn(nullable = false, name="cod_medico", referencedColumnName = "id")
+    @JoinColumn(nullable = false, name="cod_medico", referencedColumnName = "id_medico")
     private MedicoVeterinario medico;
     
-    public Cirurgia(String tipo_cirurgia, Date data_cirurgia, Time horario_cirurgia, Animal animal, MedicoVeterinario medico) {
+    public Cirurgia(String tipo_cirurgia, Date datahora_cirurgia, Animal animal, MedicoVeterinario medico) {
         this.tipo_cirurgia = tipo_cirurgia;
-        this.data_cirurgia = data_cirurgia;
-        this.horario_cirurgia = horario_cirurgia;
+        this.datahora_cirurgia = datahora_cirurgia;
         this.animal = animal;
         this.medico = medico;
     }
@@ -63,20 +53,12 @@ public class Cirurgia implements Serializable{
         this.tipo_cirurgia = tipo_cirurgia;
     }
 
-    public Date getData_cirurgia() {
-        return data_cirurgia;
+    public Date getDatahora_cirurgia() {
+        return datahora_cirurgia;
     }
 
-    public void setData_cirurgia(Date data_cirurgia) {
-        this.data_cirurgia = data_cirurgia;
-    }
-
-    public Time getHorario_cirurgia() {
-        return horario_cirurgia;
-    }
-
-    public void setHorario_cirurgia(Time horario_cirurgia) {
-        this.horario_cirurgia = horario_cirurgia;
+    public void setDatahora_cirurgia(Date datahora_cirurgia) {
+        this.datahora_cirurgia = datahora_cirurgia;
     }
 
     public Animal getAnimal() {
@@ -94,5 +76,8 @@ public class Cirurgia implements Serializable{
     public void setMedico(MedicoVeterinario medico) {
         this.medico = medico;
     }
+
+    
+    
     
 }

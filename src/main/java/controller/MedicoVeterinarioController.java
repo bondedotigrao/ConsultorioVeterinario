@@ -19,24 +19,24 @@ public class MedicoVeterinarioController {
         return instance;
     }
     
-    public static void adicionar(MedicoVeterinario mv) {
-        instance.adicionar(mv);
+    public static void create(MedicoVeterinario mv) {
+        instance.create(mv);
     }
     
-    public static void deletar(MedicoVeterinario mv) {
-        instance.deletar(mv);
+    public static void delete(MedicoVeterinario mv) {
+        instance.delete(mv);
     }
     
-    public static void alterar(MedicoVeterinario mv) {
-        instance.deletar(mv);
+    public static void update(MedicoVeterinario mv) {
+        instance.update(mv);
     }
     
-    public static MedicoVeterinario recuperar(int id) {
-        return instance.recuperar(id);
+    public static MedicoVeterinario readMedicoVeterinario(int id) {
+        return instance.read(id);
     }
     
-    public static List<MedicoVeterinario> recuperarTodos() {
-        return instance.recuperarTodos();
+    public static List<MedicoVeterinario> readAllMedicosVeterinarios() {
+        return instance.readAll();
     }
     
 }

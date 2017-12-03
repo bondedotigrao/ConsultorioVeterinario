@@ -36,7 +36,7 @@ public class ConsultaHibernateDAO implements ConsultaDAO{
     }
 
     @Override
-    public void adicionar(Consulta consulta) {
+    public void create(Consulta consulta) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -52,7 +52,7 @@ public class ConsultaHibernateDAO implements ConsultaDAO{
     }
 
     @Override
-    public Consulta recuperar(int codigo) {
+    public Consulta read(int codigo) {
         Session session = this.sessions.openSession();
         try {
             return (Consulta) session.getSession().createQuery("From Consulta Where id=" + codigo).getResultList().get(0);
@@ -65,7 +65,7 @@ public class ConsultaHibernateDAO implements ConsultaDAO{
     }
 
     @Override
-    public void alterar(Consulta consulta) {
+    public void update(Consulta consulta) {
 
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
@@ -84,7 +84,7 @@ public class ConsultaHibernateDAO implements ConsultaDAO{
     }
 
     @Override
-    public void deletar(Consulta consulta) {
+    public void delete(Consulta consulta) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -100,7 +100,7 @@ public class ConsultaHibernateDAO implements ConsultaDAO{
     }
 
     @Override
-    public List<Consulta> recuperarTodos() {
+    public List<Consulta> readAll() {
         Session session = this.sessions.openSession();
         List<Consulta> listaCliente = new ArrayList();
         try {

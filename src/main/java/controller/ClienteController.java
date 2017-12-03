@@ -19,24 +19,24 @@ public class ClienteController {
         return instance;
     }
 
-    public static void adicionar(Cliente cliente) {
-        instance.adicionar(cliente);
+    public static void create(Cliente cliente) {
+        instance.create(cliente);
     }
 
-    public static void deletar(Cliente cliente) {
-        instance.deletar(cliente);
+    public static void delete(Cliente cliente) {
+        instance.delete(cliente);
     }
 
-    public static Cliente recuperar(int id) {
-        return instance.recuperar(id);
+    public static Cliente readCliente(int id) {
+        return instance.read(id);
     }
 
-    public static void alterar(Cliente cliente) {
-        instance.alterar(cliente);
+    public static void update(Cliente cliente) {
+        instance.update(cliente);
     }
 
-    public static List<Cliente> recuperarTodos() {
-        return instance.recuperarTodos();
+    public static List<Cliente> readAllClientes() {
+        return instance.readAll();
     }
 
 }

@@ -2,12 +2,14 @@ package model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -18,11 +20,11 @@ import javax.persistence.OneToOne;
 public class Animal implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_animal;
-    @JoinColumn(nullable = false, name = "id_dono", referencedColumnName = "id")
-    @OneToOne
-    private Cliente dono;
+    @JoinColumn(name = "id_dono")
+    @ManyToOne
+    private Cliente cliente;
     @Column(length = 20, nullable = false)
     private String animal;
     @Column(length = 20)
@@ -31,13 +33,14 @@ public class Animal implements Serializable {
     private String nome;
 
     public Animal(Cliente dono, String animal, String raca, String nome) {
-        this.dono = dono;
+        this.cliente = dono;
         this.animal = animal;
         this.raca = raca;
         this.nome = nome;
     }
 
     public Animal() {
+        
     }
 
     public int getId() {
@@ -45,11 +48,11 @@ public class Animal implements Serializable {
     }
 
     public Cliente getDono() {
-        return dono;
+        return cliente;
     }
 
     public void setDono(Cliente dono) {
-        this.dono = dono;
+        this.cliente = dono;
     }
 
     public String getAnimal() {
@@ -75,5 +78,12 @@ public class Animal implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "Animal{" + "id_animal=" + id_animal + ", cliente=" + cliente + ", animal=" + animal + ", raca=" + raca + ", nome=" + nome + '}';
+    }
+    
+    
 
 }

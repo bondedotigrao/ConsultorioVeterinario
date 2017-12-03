@@ -8,10 +8,10 @@ import java.util.List;
  */
 public interface DAO <T> {
     
-    public void adicionar(T t);
-    public T recuperar(int id);
-    public void alterar(T t);
-    public void deletar(T t);
-    public List<T> recuperarTodos();
+    public void create(T t);
+    public T read(int id);
+    public void update(T t);
+    public void delete(T t);
+    public List<T> readAll();
     
 }

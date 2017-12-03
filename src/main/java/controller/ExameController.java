@@ -24,24 +24,24 @@ public class ExameController {
         return instance;
     }
     
-    public static void adicionar(Exame exame) {
-        instance.adicionar(exame);
+    public static void create(Exame exame) {
+        instance.create(exame);
     }
     
-    public static void deletar(Exame exame) {
-        instance.deletar(exame);
+    public static void delete(Exame exame) {
+        instance.delete(exame);
     }
     
-    public static Exame recuperar(int id) {
-        return instance.recuperar(id);
+    public static Exame readExame(int id) {
+        return instance.read(id);
     }
     
-    public static void alterar(Exame exame) {
-        instance.alterar(exame);
+    public static void update(Exame exame) {
+        instance.update(exame);
     }
     
-    public static List<Exame> recuperarTodos() {
-        return instance.recuperarTodos();
+    public static List<Exame> readAllExames() {
+        return instance.readAll();
     }
     
 }

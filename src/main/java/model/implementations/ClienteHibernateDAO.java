@@ -36,7 +36,7 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public void adicionar(Cliente cliente) {
+    public void create(Cliente cliente) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -52,7 +52,7 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public Cliente recuperar(int codigo) {
+    public Cliente read(int codigo) {
         Session session = this.sessions.openSession();
         try {
             return (Cliente) session.getSession().createQuery("From Cliente Where id=" + codigo).getResultList().get(0);
@@ -65,16 +65,15 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public void alterar(Cliente cliente) {
+    public void update(Cliente cliente) {
 
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
         try {
-
             session.update(cliente);
             t.commit();
-
+            
         } catch (Exception alteraClienteException) {
             System.out.println(alteraClienteException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o cliente");
             t.rollback();
@@ -84,7 +83,7 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public void deletar(Cliente cliente) {
+    public void delete(Cliente cliente) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
@@ -100,7 +99,7 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public List<Cliente> recuperarTodos() {
+    public List<Cliente> readAll() {
         Session session = this.sessions.openSession();
         List<Cliente> listaCliente = new ArrayList();
         try {

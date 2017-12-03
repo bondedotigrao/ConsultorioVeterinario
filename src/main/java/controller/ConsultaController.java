@@ -24,24 +24,24 @@ public class ConsultaController {
         return instance;
     }
 
-    public static void adicionar(Consulta consulta) {
-        instance.adicionar(consulta);
+    public static void create(Consulta consulta) {
+        instance.create(consulta);
     }
 
-    public static void deletar(Consulta consulta) {
-        instance.deletar(consulta);
+    public static void delete(Consulta consulta) {
+        instance.delete(consulta);
     }
 
-    public static Consulta recuperar(int id) {
-        return instance.recuperar(id);
+    public static Consulta readConsulta(int id) {
+        return instance.read(id);
     }
 
-    public static void alterar(Consulta consulta) {
-        instance.alterar(consulta);
+    public static void update(Consulta consulta) {
+        instance.update(consulta);
     }
 
-    public static List<Consulta> recuperarTodos() {
-        return instance.recuperarTodos();
+    public static List<Consulta> readAllConsultas() {
+        return instance.readAll();
     }
     
 }

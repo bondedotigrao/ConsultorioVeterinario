@@ -38,7 +38,7 @@ public class ExameHibernateDAO implements ExameDAO{
     }
 
     @Override
-    public void adicionar(Exame exame) {
+    public void create(Exame exame) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
         
@@ -53,7 +53,7 @@ public class ExameHibernateDAO implements ExameDAO{
     }
 
     @Override
-    public Exame recuperar(int id) {
+    public Exame read(int id) {
         Session session = this.sessions.openSession();
         try {
             return (Exame) session.getSession().createQuery("FROM Exame WHERE id_exame" + id).getResultList().get(0);
@@ -63,7 +63,7 @@ public class ExameHibernateDAO implements ExameDAO{
     }
 
     @Override
-    public void alterar(Exame exame) {
+    public void update(Exame exame) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
         
@@ -79,7 +79,7 @@ public class ExameHibernateDAO implements ExameDAO{
     }
 
     @Override
-    public void deletar(Exame exame) {
+    public void delete(Exame exame) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
         
@@ -94,7 +94,7 @@ public class ExameHibernateDAO implements ExameDAO{
     }
 
     @Override
-    public List<Exame> recuperarTodos() {
+    public List<Exame> readAll() {
         Session session = this.sessions.openSession();
         
         try {

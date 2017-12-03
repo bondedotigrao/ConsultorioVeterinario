@@ -24,23 +24,23 @@ public class AnimalController {
         return instance;
     }
     
-    public static void adicionar(Animal animal) {
-        instance.adicionar(animal);
+    public static void create(Animal animal) {
+        instance.create(animal);
     }
     
-    public static void deletar(Animal animal) {
-        instance.deletar(animal);
+    public static void delete(Animal animal) {
+        instance.delete(animal);
     }
     
-    public static Animal recuperar(int id) {
-        return instance.recuperar(id);
+    public static Animal readAnimal(int id) {
+        return instance.read(id);
     }
     
-    public static void alterar(Animal animal) {
-        instance.alterar(animal);
+    public static void update(Animal animal) {
+        instance.update(animal);
     }
     
-    public static List<Animal> recuperarTodos() {
-        return instance.recuperarTodos();
+    public static List<Animal> readAllAnimais() {
+        return instance.readAll();
     }
 }
