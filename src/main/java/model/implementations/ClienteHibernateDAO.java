@@ -57,8 +57,8 @@ public class ClienteHibernateDAO implements ClienteDAO {
         try {
             return (Cliente) session.getSession().createQuery("From Cliente Where id=" + codigo).getResultList().get(0);
 
-        } finally {
-            //Fechamos a sessão
+        } 
+        finally {
             session.close();
         }
 

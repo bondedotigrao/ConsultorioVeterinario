@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cliente")
+@ManagedBean(name="cliente")
+@SessionScoped
 public class Cliente implements Serializable{
 
     @Id

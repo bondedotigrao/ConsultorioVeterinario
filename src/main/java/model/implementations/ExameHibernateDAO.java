@@ -56,7 +56,7 @@ public class ExameHibernateDAO implements ExameDAO{
     public Exame read(int id) {
         Session session = this.sessions.openSession();
         try {
-            return (Exame) session.getSession().createQuery("FROM Exame WHERE id_exame" + id).getResultList().get(0);
+            return (Exame) session.getSession().createQuery("FROM Exame WHERE id_exame=" + id).getResultList().get(0);
         } finally {
             session.close();
         }
