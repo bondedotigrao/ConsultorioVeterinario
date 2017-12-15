@@ -1,9 +1,13 @@
-package model.implementations;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model.hibernate;
 
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import model.MedicoVeterinario;
-import model.interfaces.MedicoVeterinarioDAO;
+import model.entidades.Consulta;
+import model.interfaces.ConsultaDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,36 +15,73 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author Sebastian
+ * @author sion_
  */
-public class MedicoVeterinarioHibernateDAO implements MedicoVeterinarioDAO{
-    
-    private SessionFactory sessions = null;
-    private static MedicoVeterinarioHibernateDAO instance = null;
-    private EntityManagerFactory emf = null;
+public class ConsultaHibernateDAO implements ConsultaDAO {
 
-    public static MedicoVeterinarioHibernateDAO getInstance() {
+    private SessionFactory sessions;
+    private static ConsultaHibernateDAO instance;
 
-        if (instance == null) {
-            instance = new MedicoVeterinarioHibernateDAO();
+    public static ConsultaHibernateDAO getInstance() {
+        if (instance != null) {
+            instance = new ConsultaHibernateDAO();
         }
 
         return instance;
     }
 
-    public MedicoVeterinarioHibernateDAO() {
-
+    public ConsultaHibernateDAO() {
         Configuration cfg = new Configuration().configure();
         this.sessions = cfg.buildSessionFactory();
     }
 
     @Override
-    public void create(MedicoVeterinario mv) {
+    public void insert(Consulta consulta) {
+        Session session = this.sessions.openSession();
+        Transaction t = session.beginTransaction();
+        try {
+            session.save(consulta);
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Consulta recovered(int id) {
+        Session session = this.sessions.openSession();
+        try {
+            return (Consulta) session.getSession().createQuery("FROM Consulta WHERE id_consulta=" + id).getResultList().get(0);
+        } catch (Exception e) {
+            return null;
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public void update(Consulta consulta) {
+        Session session = this.sessions.openSession();
+        Transaction t = session.beginTransaction();
+        try {
+            session.update(consulta);
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public void delete(Consulta consulta) {
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
 
         try {
-            session.persist(mv);
+            session.delete(consulta);
             t.commit();
         } catch (Exception e) {
             t.rollback();
@@ -51,64 +92,15 @@ public class MedicoVeterinarioHibernateDAO implements MedicoVeterinarioDAO{
     }
 
     @Override
-    public MedicoVeterinario read(int codigo) {
+    public List<Consulta> recoveredAll() {
         Session session = this.sessions.openSession();
         try {
-            return (MedicoVeterinario) session.getSession().createQuery("From MedicoVeterinario Where id=" + codigo).getResultList().get(0);
-
-        } finally {
-            //Fechamos a sessão
-            session.close();
-        }
-
-    }
-
-    @Override
-    public void update(MedicoVeterinario mv) {
-        Session session = this.sessions.openSession();
-        Transaction t = session.beginTransaction();
-        
-        try {
-            session.update(mv);
-            t.commit();
-        } catch (Exception alteraExameException) {
-            System.out.println(alteraExameException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o médico veteriario!");
-            t.rollback();
-        } finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void delete(MedicoVeterinario mv) {
-        Session session = this.sessions.openSession();
-        Transaction t = session.beginTransaction();
-
-        try {
-            session.delete(mv);
-            t.commit();
+            return (List) session.getSession().createQuery("FROM Consulta").getResultList();
         } catch (Exception e) {
-            t.rollback();
-
+            return null;
         } finally {
             session.close();
         }
     }
 
-    @Override
-    public List readAll() {
-        
-        Session session = this.sessions.openSession();
-
-        try {
-
-            return (List) session.getSession().createQuery("");
-
-        } finally {
-
-            session.close();
-        }
-
-    }
-    
 }

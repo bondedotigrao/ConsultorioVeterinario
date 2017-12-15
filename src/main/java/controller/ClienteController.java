@@ -1,63 +1,72 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import model.Cliente;
-import model.implementations.ClienteHibernateDAO;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import model.ClienteModel;
+import model.entidades.Cliente;
 
 /**
  *
  * @author sion_
  */
-@ManagedBean(name="clienteController")
-@SessionScoped
+@ManagedBean
+@ViewScoped
 public class ClienteController {
     
-    private List<Cliente> repositorioCliente = null;
+    private final ClienteModel clienteHibernate;
+    private Cliente cadCliente;
     private Cliente selectedCliente;
     
-    public ClienteController(){
-        ClienteHibernateDAO chd = new ClienteHibernateDAO();
-        this.repositorioCliente = chd.readAll();
-        this.selectedCliente = new Cliente();
+    public ClienteController() {
+        this.clienteHibernate = new ClienteModel();
+        this.cadCliente = new Cliente();
+    }
+    
+    public String insert() {
+        this.clienteHibernate.insert(this.cadCliente);
+        this.cadCliente = new Cliente();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente foi inserido com sucesso!"));
+        return "index.xhtml";
+    }
+    
+    public Cliente recovered() {
+        return this.clienteHibernate.recovered(this.selectedCliente.getId_cliente());
+    }
+    
+    public String update() {
+        this.clienteHibernate.update(this.selectedCliente);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente foi atualizado com sucesso!"));
+        return "index.xhtml";
+    }
+    
+    public String delete() {
+        this.clienteHibernate.delete(this.selectedCliente);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O cliente foi deletado com sucesso!"));
+        return "index.xhtml";
+    }
+    
+    public List<Cliente> recoveredAll() {
+        return this.clienteHibernate.recoveredAll();
+    }
+    
+    public Cliente recoveredCPF() {
+        return this.clienteHibernate.recoveredCPF(this.selectedCliente.getCpf_cliente());
     }
 
-    private static ClienteHibernateDAO instance = null;
-
-    public static ClienteHibernateDAO getInstance() {
-        if (instance == null) {
-            instance = new ClienteHibernateDAO();
-        }
-        return instance;
+    public Cliente getCadCliente() {
+        return cadCliente;
     }
 
-    public static void create(Cliente cliente) {
-        instance.create(cliente);
-    }
-
-    public static void delete(Cliente cliente) {
-        instance.delete(cliente);
-    }
-
-    public static Cliente readCliente(int id) {
-        return instance.read(id);
-    }
-
-    public static void update(Cliente cliente) {
-        instance.update(cliente);
-    }
-
-    public static List<Cliente> readAllClientes() {
-        return instance.readAll();
-    }
-
-    public List<Cliente> getRepositorioCliente() {
-        return repositorioCliente;
-    }
-
-    public void setRepositorioCliente(List<Cliente> repositorioCliente) {
-        this.repositorioCliente = repositorioCliente;
+    public void setCadCliente(Cliente cadCliente) {
+        this.cadCliente = cadCliente;
     }
 
     public Cliente getSelectedCliente() {
@@ -69,5 +78,5 @@ public class ClienteController {
     }
     
     
-
+    
 }

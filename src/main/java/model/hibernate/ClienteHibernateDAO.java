@@ -1,28 +1,29 @@
-package model.implementations;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import model.Cliente;
+import model.entidades.Cliente;
+import model.interfaces.ClienteDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import model.interfaces.ClienteDAO;
 
 /**
  *
- * @author Sebastian
+ * @author sion_
  */
 public class ClienteHibernateDAO implements ClienteDAO {
 
-    private SessionFactory sessions = null;
-    private static ClienteHibernateDAO instance = null;
-    private EntityManagerFactory emf = null;
+    private SessionFactory sessions;
+    private static ClienteHibernateDAO instance;
 
     public static ClienteHibernateDAO getInstance() {
-
-        if (instance == null) {
+        if (instance != null) {
             instance = new ClienteHibernateDAO();
         }
 
@@ -30,52 +31,56 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     public ClienteHibernateDAO() {
-
         Configuration cfg = new Configuration().configure();
         this.sessions = cfg.buildSessionFactory();
     }
 
     @Override
-    public void create(Cliente cliente) {
+    public Cliente recoveredCPF(String cpfCliente) {
         Session session = this.sessions.openSession();
-        Transaction t = session.beginTransaction();
-
         try {
-            session.persist(cliente);
-            t.commit();
+            return (Cliente) session.getSession().createQuery("FROM Cliente WHERE cpf_cliente='"+cpfCliente+"'").getResultList().get(0);
         } catch (Exception e) {
-            t.rollback();
-
+            return null;
         } finally {
             session.close();
         }
     }
 
     @Override
-    public Cliente read(int codigo) {
+    public void insert(Cliente cliente) {
         Session session = this.sessions.openSession();
+        Transaction t = session.beginTransaction();
         try {
-            return (Cliente) session.getSession().createQuery("From Cliente Where id=" + codigo).getResultList().get(0);
-
-        } 
-        finally {
+            session.save(cliente);
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+        } finally {
             session.close();
         }
+    }
 
+    @Override
+    public Cliente recovered(int id) {
+        Session session = this.sessions.openSession();
+        try {
+            return (Cliente) session.getSession().createQuery("FROM Cliente WHERE id_cliente=" + id).getResultList().get(0);
+        } catch (Exception e) {
+            return null;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public void update(Cliente cliente) {
-
         Session session = this.sessions.openSession();
         Transaction t = session.beginTransaction();
-
         try {
             session.update(cliente);
             t.commit();
-            
-        } catch (Exception alteraClienteException) {
-            System.out.println(alteraClienteException.getMessage() + "\nAlgo de inesperado aconteceu ao alterar o cliente");
+        } catch (Exception e) {
             t.rollback();
         } finally {
             session.close();
@@ -99,20 +104,15 @@ public class ClienteHibernateDAO implements ClienteDAO {
     }
 
     @Override
-    public List<Cliente> readAll() {
+    public List<Cliente> recoveredAll() {
         Session session = this.sessions.openSession();
-        List<Cliente> listaCliente = new ArrayList();
         try {
-
-            listaCliente = session.createQuery("FROM Cliente").list();
+            return (List) session.getSession().createQuery("FROM Cliente").getResultList();
         } catch (Exception e) {
-            System.out.println("Erro!");
+            return null;
         } finally {
             session.close();
         }
-
-        return listaCliente;
-
     }
 
 }

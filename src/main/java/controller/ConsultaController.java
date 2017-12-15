@@ -6,42 +6,73 @@
 package controller;
 
 import java.util.List;
-import model.Consulta;
-import model.implementations.ConsultaHibernateDAO;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import model.ConsultaModel;
+import model.entidades.Consulta;
 
 /**
  *
  * @author sion_
  */
+@ManagedBean
+@ViewScoped
 public class ConsultaController {
     
-    private static ConsultaHibernateDAO instance = null;
-
-    public static ConsultaHibernateDAO getInstance() {
-        if (instance == null) {
-            instance = new ConsultaHibernateDAO();
-        }
-        return instance;
+    private final ConsultaModel consultaHibernate;
+    private Consulta cadConsulta;
+    private Consulta selectedConsulta;
+    
+    public ConsultaController() {
+        this.consultaHibernate = new ConsultaModel();
+        this.cadConsulta = new Consulta();
+    }
+    
+    public String insert() {
+        this.consultaHibernate.insert(this.cadConsulta);
+        this.cadConsulta = new Consulta();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("A consulta foi marcada com sucesso!"));
+        return "index.xhtml";
+    }
+    
+    public Consulta recovered() {
+        return this.consultaHibernate.recovered(this.selectedConsulta.getId_consulta());
     }
 
-    public static void create(Consulta consulta) {
-        instance.create(consulta);
+    public String update() {
+        this.consultaHibernate.update(this.selectedConsulta);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("A consulta foi atualizada com sucesso!"));
+        return "index.xhtml";
+    }
+    
+    public String delete() {
+        this.consultaHibernate.delete(this.selectedConsulta);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("A consulta foi deletada com sucesso!"));
+        return "index.xhtml";
+    }
+    
+    public List<Consulta> recoveredAll() {
+        return this.consultaHibernate.recoveredAll();
     }
 
-    public static void delete(Consulta consulta) {
-        instance.delete(consulta);
+    public Consulta getCadConsulta() {
+        return cadConsulta;
     }
 
-    public static Consulta readConsulta(int id) {
-        return instance.read(id);
+    public void setCadConsulta(Consulta cadConsulta) {
+        this.cadConsulta = cadConsulta;
     }
 
-    public static void update(Consulta consulta) {
-        instance.update(consulta);
+    public Consulta getSelectedConsulta() {
+        return selectedConsulta;
     }
 
-    public static List<Consulta> readAllConsultas() {
-        return instance.readAll();
+    public void setSelectedConsulta(Consulta selectedConsulta) {
+        this.selectedConsulta = selectedConsulta;
     }
+    
+    
     
 }

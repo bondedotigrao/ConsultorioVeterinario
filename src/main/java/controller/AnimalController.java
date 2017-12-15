@@ -6,41 +6,73 @@
 package controller;
 
 import java.util.List;
-import model.Animal;
-import model.implementations.AnimalHibernateDAO;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import model.AnimalModel;
+import model.entidades.Animal;
 
 /**
  *
  * @author sion_
  */
+@ManagedBean
+@ViewScoped
 public class AnimalController {
     
-    private static AnimalHibernateDAO instance = null;
+    private final AnimalModel animalHibernate;
+    private Animal cadAnimal;
+    private Animal selectedAnimal;
     
-    public static AnimalHibernateDAO getInstance() {
-        if(instance == null) {
-            instance = new AnimalHibernateDAO();
-        } 
-        return instance;
+    public AnimalController() {
+        this.animalHibernate = new AnimalModel();
+        this.cadAnimal = new Animal();
     }
     
-    public static void create(Animal animal) {
-        instance.create(animal);
+    public String insert() {
+        this.animalHibernate.insert(this.cadAnimal);
+        this.cadAnimal = new Animal();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O animal foi inserido com sucesso!"));
+        return "index.xhtml";
     }
     
-    public static void delete(Animal animal) {
-        instance.delete(animal);
+    public Animal recovered() {
+        return this.animalHibernate.recovered(this.selectedAnimal.getId_animal());
     }
     
-    public static Animal readAnimal(int id) {
-        return instance.read(id);
+    public String update() {
+        this.animalHibernate.update(this.selectedAnimal);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O animal foi atualizado com sucesso!"));
+        return "index.xhtml";
     }
     
-    public static void update(Animal animal) {
-        instance.update(animal);
+    public String delete() {
+        this.animalHibernate.delete(this.selectedAnimal);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O animal foi deletado com sucesso!"));
+        return "index.xhtml";
     }
     
-    public static List<Animal> readAllAnimais() {
-        return instance.readAll();
+    public List<Animal> recoveredAll() {
+        return this.animalHibernate.recoveredAll();
     }
+
+    public Animal getCadAnimal() {
+        return cadAnimal;
+    }
+
+    public void setCadAnimal(Animal cadAnimal) {
+        this.cadAnimal = cadAnimal;
+    }
+
+    public Animal getSelectedAnimal() {
+        return selectedAnimal;
+    }
+
+    public void setSelectedAnimal(Animal selectedAnimal) {
+        this.selectedAnimal = selectedAnimal;
+    }
+    
+    
+    
 }

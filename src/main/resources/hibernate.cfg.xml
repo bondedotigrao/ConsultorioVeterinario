@@ -7,11 +7,10 @@
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/PI</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">1234</property>
-    <mapping class="model.Animal"/>
-    <mapping class="model.Cliente"/>
-    <mapping class="model.MedicoVeterinario"/>
-    <mapping class="model.Consulta"/>
-    <mapping class="model.Cirurgia"/>
-    <mapping class="model.Exame"/>
+    <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
+    <mapping class="model.entidades.Animal"/>
+    <mapping class="model.entidades.Cliente"/>
+    <mapping class="model.entidades.Consulta"/>
+    <mapping class="model.entidades.MedicoVeterinario"/>
   </session-factory>
 </hibernate-configuration>
